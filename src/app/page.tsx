@@ -51,13 +51,8 @@ export default function HomePage() {
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6">
         {/* 히어로 */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold mb-3">
-            <span className="bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">
-              다혜&apos;s중개사패스
-            </span>
-          </h1>
           {/* D-day 배너 */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 rounded-2xl px-5 py-3 mb-3">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-950/40 dark:to-rose-950/40 border border-pink-200 dark:border-pink-800 rounded-2xl px-5 py-3 mb-3">
             <div className="text-center">
               <div className="text-xs text-pink-500 font-medium">제37회 시험까지</div>
               <div className="text-2xl font-black text-rose-600 leading-tight">
@@ -65,16 +60,16 @@ export default function HomePage() {
               </div>
               <div className="text-[10px] text-pink-400">2026. 10. 24</div>
             </div>
-            <div className="h-10 w-px bg-pink-200" />
+            <div className="h-10 w-px bg-pink-200 dark:bg-pink-800" />
             <div className="text-left">
-              <div className="text-xs text-gray-500">남은 시간</div>
-              <div className="text-sm font-bold text-gray-800">
+              <div className="text-xs text-gray-500 dark:text-gray-400">남은 시간</div>
+              <div className="text-sm font-bold text-gray-800 dark:text-gray-200">
                 {dDay > 0 ? `${Math.floor(dDay / 30)}개월 ${dDay % 30}일` : '-'}
               </div>
               <div className="text-[10px] text-gray-400 mt-0.5">파이팅! 🔥</div>
             </div>
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             실전과 동일한 환경에서 연습하세요
           </p>
         </div>
@@ -111,29 +106,29 @@ export default function HomePage() {
             <Link
               key={link.href}
               href={link.href}
-              className="bg-white rounded-xl p-3 text-center shadow-sm border border-gray-100 active:bg-gray-50 transition-colors"
+              className="bg-white dark:bg-gray-800 rounded-xl p-3 text-center shadow-sm border border-gray-100 dark:border-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition-colors"
             >
               <div className="text-xl mb-1">{link.icon}</div>
-              <div className="text-xs font-semibold text-gray-800">{link.label}</div>
+              <div className="text-xs font-semibold text-gray-800 dark:text-gray-200">{link.label}</div>
             </Link>
           ))}
         </div>
 
         {/* 합격 기준 */}
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200/50">
-          <h3 className="text-sm font-semibold text-gray-800 mb-2">합격 기준</h3>
+        <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-800 rounded-xl p-4 border border-gray-200/50 dark:border-gray-700">
+          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">합격 기준</h3>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
-              <div className="text-lg font-bold text-gray-700">40점</div>
-              <div className="text-[10px] text-gray-500">과목 최저</div>
+              <div className="text-lg font-bold text-gray-700 dark:text-gray-300">40점</div>
+              <div className="text-[10px] text-gray-500 dark:text-gray-400">과목 최저</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gray-700">60점</div>
-              <div className="text-[10px] text-gray-500">평균 이상</div>
+              <div className="text-lg font-bold text-gray-700 dark:text-gray-300">60점</div>
+              <div className="text-[10px] text-gray-500 dark:text-gray-400">평균 이상</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gray-700">2.5점</div>
-              <div className="text-[10px] text-gray-500">문항당</div>
+              <div className="text-lg font-bold text-gray-700 dark:text-gray-300">2.5점</div>
+              <div className="text-[10px] text-gray-500 dark:text-gray-400">문항당</div>
             </div>
           </div>
         </div>

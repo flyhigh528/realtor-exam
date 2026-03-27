@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: #f8fafc;
   --color-foreground: #0f172a;
@@ -16,6 +18,11 @@ body {
   color: var(--color-foreground);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+.dark body {
+  background: #0f172a;
+  color: #f1f5f9;
 }
 
 /* 모바일 safe area */

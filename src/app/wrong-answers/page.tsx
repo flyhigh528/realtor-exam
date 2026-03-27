@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import { useWrongAnswers } from '@/hooks/useWrongAnswers';
 import { SUBJECTS } from '@/lib/constants';
@@ -8,6 +9,7 @@ import { SubjectId } from '@/lib/types';
 import QuestionCard from '@/components/exam/QuestionCard';
 
 export default function WrongAnswersPage() {
+  const router = useRouter();
   const { wrongAnswers, remove, markReviewed, clear } = useWrongAnswers();
   const [selectedSubject, setSelectedSubject] = useState<SubjectId | 'all'>('all');
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -21,17 +23,32 @@ export default function WrongAnswersPage() {
     return acc;
   }, {} as Record<string, number>);
 
+  const handleRetry = () => {
+    const query = selectedSubject !== 'all' ? `?subject=${selectedSubject}` : '';
+    router.push(`/wrong-answers/test${query}`);
+  };
+
   return (
     <>
       <Header />
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6">
-        <h1 className="text-xl font-bold text-gray-900 mb-4">오답노트</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">오답노트</h1>
+          {wrongAnswers.length > 0 && (
+            <button
+              onClick={handleRetry}
+              className="flex items-center gap-1.5 bg-orange-500 text-white text-xs font-semibold px-3 py-2 rounded-xl active:bg-orange-600"
+            >
+              🎯 오답 재시험
+            </button>
+          )}
+        </div>
 
         {wrongAnswers.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-4xl mb-3">📝</div>
-            <p className="text-gray-500 text-sm">아직 저장된 오답이 없습니다.</p>
-            <p className="text-gray-400 text-xs mt-1">시험 후 결과 화면에서 오답을 저장할 수 있습니다.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">아직 저장된 오답이 없습니다.</p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">시험 후 결과 화면에서 오답을 저장할 수 있습니다.</p>
           </div>
         ) : (
           <>
@@ -42,7 +59,7 @@ export default function WrongAnswersPage() {
                 className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   selectedSubject === 'all'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-600'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                 }`}
               >
                 전체 ({wrongAnswers.length})
@@ -55,7 +72,7 @@ export default function WrongAnswersPage() {
                     className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                       selectedSubject === s.id
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                     }`}
                   >
                     {s.name.split(' ')[0]} ({subjectCounts[s.id]})
@@ -69,13 +86,13 @@ export default function WrongAnswersPage() {
               {filtered.map((wrong) => {
                 const isExpanded = expandedId === wrong.questionId;
                 return (
-                  <div key={wrong.questionId} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                  <div key={wrong.questionId} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
                     <button
                       onClick={() => setExpandedId(isExpanded ? null : wrong.questionId)}
                       className="w-full px-4 py-3 flex items-center justify-between text-left"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800 line-clamp-2">{wrong.question.text}</p>
+                        <p className="text-sm text-gray-800 dark:text-gray-200 line-clamp-2">{wrong.question.text}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-xs text-gray-400">{wrong.subjectName}</span>
                           {wrong.reviewCount > 0 && (
@@ -89,7 +106,7 @@ export default function WrongAnswersPage() {
                     </button>
 
                     {isExpanded && (
-                      <div className="px-4 pb-4 border-t border-gray-50">
+                      <div className="px-4 pb-4 border-t border-gray-50 dark:border-gray-700">
                         <QuestionCard
                           question={wrong.question}
                           questionIndex={0}
@@ -100,10 +117,8 @@ export default function WrongAnswersPage() {
                         />
                         <div className="flex gap-2 mt-3">
                           <button
-                            onClick={() => {
-                              markReviewed(wrong.questionId);
-                            }}
-                            className="flex-1 py-2 rounded-lg text-xs font-semibold bg-green-50 text-green-700 active:bg-green-100"
+                            onClick={() => markReviewed(wrong.questionId)}
+                            className="flex-1 py-2 rounded-lg text-xs font-semibold bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400"
                           >
                             복습 완료
                           </button>
@@ -112,7 +127,7 @@ export default function WrongAnswersPage() {
                               remove(wrong.questionId);
                               setExpandedId(null);
                             }}
-                            className="flex-1 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 active:bg-red-100"
+                            className="flex-1 py-2 rounded-lg text-xs font-semibold bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400"
                           >
                             삭제
                           </button>
