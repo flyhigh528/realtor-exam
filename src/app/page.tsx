@@ -39,19 +39,41 @@ const quickLinks = [
 ];
 
 export default function HomePage() {
+  const examDate = new Date('2026-10-24T00:00:00+09:00');
+  const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+  today.setHours(0, 0, 0, 0);
+  const diffMs = examDate.getTime() - today.getTime();
+  const dDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
   return (
     <>
       <Header />
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6">
         {/* 히어로 */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full mb-3">
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-            2026년 제37회 시험 대비
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            공인중개사 모의시험
+          <h1 className="text-2xl font-bold mb-3">
+            <span className="bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">
+              다혜&apos;s중개사패스
+            </span>
           </h1>
+          {/* D-day 배너 */}
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 rounded-2xl px-5 py-3 mb-3">
+            <div className="text-center">
+              <div className="text-xs text-pink-500 font-medium">제37회 시험까지</div>
+              <div className="text-2xl font-black text-rose-600 leading-tight">
+                {dDay > 0 ? `D-${dDay}` : dDay === 0 ? 'D-Day' : '시험 종료'}
+              </div>
+              <div className="text-[10px] text-pink-400">2026. 10. 24</div>
+            </div>
+            <div className="h-10 w-px bg-pink-200" />
+            <div className="text-left">
+              <div className="text-xs text-gray-500">남은 시간</div>
+              <div className="text-sm font-bold text-gray-800">
+                {dDay > 0 ? `${Math.floor(dDay / 30)}개월 ${dDay % 30}일` : '-'}
+              </div>
+              <div className="text-[10px] text-gray-400 mt-0.5">파이팅! 🔥</div>
+            </div>
+          </div>
           <p className="text-sm text-gray-500">
             실전과 동일한 환경에서 연습하세요
           </p>

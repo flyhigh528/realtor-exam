@@ -21,8 +21,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-          공인중개사
+        <Link href="/" className="text-lg font-bold bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">
+          다혜&apos;s중개사패스
         </Link>
 
         {/* 데스크톱 네비 */}
