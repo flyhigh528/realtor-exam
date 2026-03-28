@@ -45,23 +45,35 @@ export default function ChoiceList({
         }
 
         return (
-          <button
-            key={choice.number}
-            onClick={() => !disabled && onSelect(choice.number)}
-            disabled={disabled}
-            className={className}
-          >
-            <span className="text-base font-medium shrink-0 mt-0.5">
-              {circledNumbers[choice.number - 1]}
-            </span>
-            <span className="text-sm leading-relaxed">{choice.text}</span>
-            {showResult && isCorrect && (
-              <span className="ml-auto text-green-600 shrink-0">✓</span>
+          <div key={choice.number}>
+            <button
+              onClick={() => !disabled && onSelect(choice.number)}
+              disabled={disabled}
+              className={className}
+            >
+              <span className="text-base font-medium shrink-0 mt-0.5">
+                {circledNumbers[choice.number - 1]}
+              </span>
+              <span className="text-sm leading-relaxed">{choice.text}</span>
+              {showResult && isCorrect && (
+                <span className="ml-auto text-green-600 shrink-0">✓</span>
+              )}
+              {showResult && isWrong && (
+                <span className="ml-auto text-red-600 shrink-0">✗</span>
+              )}
+            </button>
+            {showResult && choice.explanation && (
+              <p className={`text-xs leading-relaxed mt-1 ml-8 mb-1 ${
+                isCorrect
+                  ? 'text-green-600'
+                  : isWrong
+                    ? 'text-red-500'
+                    : 'text-gray-400'
+              }`}>
+                → {choice.explanation}
+              </p>
             )}
-            {showResult && isWrong && (
-              <span className="ml-auto text-red-600 shrink-0">✗</span>
-            )}
-          </button>
+          </div>
         );
       })}
     </div>
