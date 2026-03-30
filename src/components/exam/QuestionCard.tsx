@@ -42,9 +42,9 @@ export default function QuestionCard({
 
       {showResult && (
         <div className="mt-4 bg-blue-50 rounded-xl p-4 border border-blue-100">
-          <div className="text-xs font-semibold text-blue-700 mb-1">해설</div>
+          <div className="text-xs font-semibold text-blue-700 mb-1">✅ 정답 해설</div>
           <p className="text-sm text-blue-900 leading-relaxed">
-            {question.explanation}
+            {question.detailedExplanation || question.explanation}
           </p>
           {question.lawReference && (
             <p className="text-xs text-blue-600 mt-2">

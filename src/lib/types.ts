@@ -12,6 +12,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 export interface Choice {
   number: number;
   text: string;
+  explanation?: string;
 }
 
 export interface Question {
@@ -21,6 +22,7 @@ export interface Question {
   choices: Choice[];
   answer: number;
   explanation: string;
+  detailedExplanation?: string;
   difficulty: Difficulty;
   tags: string[];
   lawReference: string | null;
