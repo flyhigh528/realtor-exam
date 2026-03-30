@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 
 const examCards = [
@@ -38,12 +41,27 @@ const quickLinks = [
   { href: '/history', icon: '📊', label: '성적 기록', desc: '점수 추이 확인' },
 ];
 
-export default function HomePage() {
-  const examDate = new Date('2026-10-24T00:00:00+09:00');
-  const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
-  today.setHours(0, 0, 0, 0);
+function getDDay(): number {
+  const now = new Date();
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const todayStr = formatter.format(now);
+  const today = new Date(todayStr + 'T00:00:00');
+  const examDate = new Date('2026-10-24T00:00:00');
   const diffMs = examDate.getTime() - today.getTime();
-  const dDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
+export default function HomePage() {
+  const [dDay, setDDay] = useState<number | null>(null);
+
+  useEffect(() => {
+    setDDay(getDDay());
+  }, []);
 
   return (
     <>
@@ -56,7 +74,7 @@ export default function HomePage() {
             <div className="text-center">
               <div className="text-xs text-pink-500 font-medium">제37회 시험까지</div>
               <div className="text-2xl font-black text-rose-600 leading-tight">
-                {dDay > 0 ? `D-${dDay}` : dDay === 0 ? 'D-Day' : '시험 종료'}
+                {dDay === null ? '...' : dDay > 0 ? `D-${dDay}` : dDay === 0 ? 'D-Day' : '시험 종료'}
               </div>
               <div className="text-[10px] text-pink-400">2026. 10. 24</div>
             </div>
@@ -64,7 +82,7 @@ export default function HomePage() {
             <div className="text-left">
               <div className="text-xs text-gray-500 dark:text-gray-400">남은 시간</div>
               <div className="text-sm font-bold text-gray-800 dark:text-gray-200">
-                {dDay > 0 ? `${Math.floor(dDay / 30)}개월 ${dDay % 30}일` : '-'}
+                {dDay !== null && dDay > 0 ? `${Math.floor(dDay / 30)}개월 ${dDay % 30}일` : '-'}
               </div>
               <div className="text-[10px] text-gray-400 mt-0.5">파이팅! 🔥</div>
             </div>
